@@ -6,5 +6,13 @@
     <string name="failed_connection">The connection failed</string>
     <string name="retry">Retry</string>
     <string name="app_logo">Application logo</string>
+    <string name="search_icon">Search icon</string>
+    <string name="read_by_label">READ BY</string>
+    <string name="follow_user">Follow</string>
+    <string name="about_me_user">est rerum tempore vitae nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla</string>
+    <string name="about_me_user_title">About me</string>
+    <string name="location_user_title">Location</string>
+
+
 
 </resources>
