@@ -28,7 +28,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.newsAppChallenge.data.UsersData
+import com.example.newsAppChallenge.data.models.UsersData
 import com.example.newsAppChallenge.ui.components.CategoryItem
 import com.example.newsAppChallenge.ui.components.UsersImageComponent
 import com.example.newsAppChallenge.ui.theme.Platinum

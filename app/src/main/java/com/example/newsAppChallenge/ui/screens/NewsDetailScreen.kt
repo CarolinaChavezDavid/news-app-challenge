@@ -28,9 +28,9 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.newsAppChallenge.data.NewsData
-import com.example.newsAppChallenge.data.NewsDetailData
-import com.example.newsAppChallenge.data.userExample
+import com.example.newsAppChallenge.data.models.NewsData
+import com.example.newsAppChallenge.data.models.NewsDetailDataModel
+import com.example.newsAppChallenge.data.models.userExample
 import com.example.newsAppChallenge.ui.components.CategoryItem
 import com.example.newsAppChallenge.ui.components.GradientImageComponent
 import com.example.newsAppChallenge.ui.components.UsersImageComponent
@@ -78,7 +78,7 @@ fun NewsDetailContent(
     onUserClicked: (userId: String) -> Unit,
     onUsersListClicked: () -> Unit,
 ) {
-    val newsDetail = NewsDetailData(newsData, userExample)
+    val newsDetail = NewsDetailDataModel(newsData, userExample)
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             item {
@@ -134,7 +134,7 @@ fun NewsDetailHeader(news: NewsData) {
 
 @Composable
 fun DetailsNewsContentHeader(
-    newsDetail: NewsDetailData,
+    newsDetail: NewsDetailDataModel,
     onUserClicked: (userId: String) -> Unit,
     onUsersListClicked: () -> Unit,
 ) {

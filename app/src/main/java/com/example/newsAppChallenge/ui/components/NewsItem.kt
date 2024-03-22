@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.newsAppChallenge.data.NewsData
+import com.example.newsAppChallenge.domain.model.News
 import com.example.newsAppChallenge.ui.theme.labelSmallStyle
 import com.example.newsAppChallenge.ui.theme.titleMediumStyle
 import com.example.newsAppChallenge.utils.toFormattedDate
@@ -31,7 +31,7 @@ import com.example.news_app_challenge.R
 
 @Composable
 fun NewsItem(
-    news: NewsData,
+    news: News,
     onClickItem: (newsId: String) -> Unit,
 ) {
     Card(

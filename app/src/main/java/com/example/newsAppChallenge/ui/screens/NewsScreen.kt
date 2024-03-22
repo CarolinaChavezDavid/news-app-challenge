@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.newsAppChallenge.data.NewsData
+import com.example.newsAppChallenge.domain.model.News
 import com.example.newsAppChallenge.ui.components.AppHeader
 import com.example.newsAppChallenge.ui.components.CategoryNewsList
 import com.example.newsAppChallenge.ui.components.NewsItem
@@ -28,7 +28,7 @@ import com.example.news_app_challenge.R
 @Composable
 fun NewsScreen(
     modifier: Modifier = Modifier,
-    news: List<NewsData>,
+    news: List<News>,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onClickItem: (newsId: String) -> Unit,
 ) {

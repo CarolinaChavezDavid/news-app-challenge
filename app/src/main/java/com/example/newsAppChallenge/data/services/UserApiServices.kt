@@ -1,7 +1,6 @@
 package com.example.newsAppChallenge.data.services
 
-import com.example.newsAppChallenge.data.NewsData
-import com.example.newsAppChallenge.data.UsersData
+import com.example.newsAppChallenge.data.models.UsersData
 import retrofit2.http.GET
 import retrofit2.http.Path
 

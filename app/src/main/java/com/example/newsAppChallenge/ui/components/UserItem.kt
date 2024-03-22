@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.newsAppChallenge.data.UsersData
+import com.example.newsAppChallenge.data.models.UsersData
 import com.example.newsAppChallenge.ui.theme.labelSmallStyle
 import com.example.newsAppChallenge.ui.theme.titleMediumStyle
 import com.example.news_app_challenge.R

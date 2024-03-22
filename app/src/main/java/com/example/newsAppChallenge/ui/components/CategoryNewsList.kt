@@ -16,11 +16,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.newsAppChallenge.data.newsCategories
+import com.example.newsAppChallenge.data.models.newsCategories
 import com.example.newsAppChallenge.ui.theme.Platinum
 import com.example.newsAppChallenge.ui.theme.RussianViolet
 import com.example.newsAppChallenge.ui.theme.titleMediumStyle
-import com.example.newsAppChallenge.ui.viewmodel.NewsUiState
 import com.example.newsAppChallenge.ui.viewmodel.NewsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

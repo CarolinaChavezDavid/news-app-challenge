@@ -15,7 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.newsAppChallenge.data.UsersData
+import com.example.newsAppChallenge.data.models.UsersData
 import com.example.newsAppChallenge.ui.components.AppHeader
 import com.example.newsAppChallenge.ui.components.UserItem
 import com.example.newsAppChallenge.ui.viewmodel.UsersUiState

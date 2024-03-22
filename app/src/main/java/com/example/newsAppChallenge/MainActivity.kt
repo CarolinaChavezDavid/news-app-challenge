@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.newsAppChallenge.ui.NewsApp
 import com.example.newsAppChallenge.ui.navigation.AppNavigation
 import com.example.newsAppChallenge.ui.theme.NewsappchallengeTheme
 import dagger.hilt.android.AndroidEntryPoint

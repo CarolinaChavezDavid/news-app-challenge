@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import com.example.newsAppChallenge.data.NewsData
+import com.example.newsAppChallenge.domain.model.News
 import com.example.newsAppChallenge.ui.theme.GhostWhite
 import com.example.newsAppChallenge.ui.theme.titleMediumStyle
 import kotlin.math.absoluteValue
@@ -25,7 +25,7 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NewsPagerComponent(
-    news: List<NewsData>,
+    news: List<News>,
     onClickItem: (newsId: String) -> Unit,
 ) {
     val pagerState = rememberPagerState(pageCount = { news.size })

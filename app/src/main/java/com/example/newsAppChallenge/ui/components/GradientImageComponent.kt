@@ -19,7 +19,10 @@ import com.example.newsAppChallenge.ui.theme.Onyx
 import com.example.news_app_challenge.R
 
 @Composable
-fun GradientImageComponent(imageUrl: String, cornerRadius: Dp = 0.dp) {
+fun GradientImageComponent(
+    imageUrl: String,
+    cornerRadius: Dp = 0.dp,
+) {
     AsyncImage(
         model = imageUrl,
         contentDescription = stringResource(id = R.string.news_image),

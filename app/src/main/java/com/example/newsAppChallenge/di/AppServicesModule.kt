@@ -14,12 +14,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 @InstallIn(SingletonComponent::class)
 object AppServicesModule {
-    private const val baseUrlPlaceHolder = "https://jsonplaceholder.org/"
+    private const val BASE_URL_PLACEHOLDER = "https://jsonplaceholder.org/"
 
     private val logging = HttpLoggingInterceptor()
     private val client = OkHttpClient.Builder().addInterceptor(logging).build()
     private val retrofitService: Retrofit by lazy {
-        Retrofit.Builder().baseUrl(baseUrlPlaceHolder)
+        Retrofit.Builder().baseUrl(BASE_URL_PLACEHOLDER)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -32,7 +32,7 @@ object AppServicesModule {
 
         val client = OkHttpClient.Builder().addInterceptor(logging).build()
 
-        return Retrofit.Builder().baseUrl(baseUrlPlaceHolder)
+        return Retrofit.Builder().baseUrl(BASE_URL_PLACEHOLDER)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build().create(NewsApiServices::class.java)
