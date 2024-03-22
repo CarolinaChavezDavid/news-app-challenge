@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.newsAppChallenge.ui.theme.Platinum
 import com.example.news_app_challenge.R
 
 @Composable
@@ -27,7 +28,7 @@ fun AppHeader() {
             Modifier
                 .fillMaxWidth()
                 .height(50.dp)
-                .background(MaterialTheme.colorScheme.background),
+                .background(Platinum),
         contentAlignment = Alignment.Center,
     ) {
         Image(

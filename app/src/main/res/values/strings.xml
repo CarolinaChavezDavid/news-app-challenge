@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">news-app-challenge</string>
+    <string name="app_name">News App challenge</string>
     <string name="news_image">News image</string>
     <string name="user_image">User image</string>
     <string name="loading">loading</string>
