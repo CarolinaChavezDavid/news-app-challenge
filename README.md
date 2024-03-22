@@ -2,11 +2,9 @@
 News application made with MVVM pattern, Clean architecture, Jetpack compose, Coroutines, Room, Hilt and Retrofit.
 
 ## 📰 NewsScreens 
- The News Screen contains a list of news obtained from the JSON placeholder API using retrofit and saved in the News room table, and displayed in the screen coroutines and MVVM pattern. This list can be filtered using the searching component, and by clicking each item, the user can access the News Detail Screen, where they can find more information.
+ The News Screen contains a list of news obtained from the JSON placeholder API using retrofit and saved in the News room table, using coroutines and implementing the MVVM patter and Clean architecture. This list can be filtered using the searching component, and by clicking each item, the user can access the News Detail Screen, where they can find more information.
 
  ![NewsScreen](https://github.com/CarolinaChavezDavid/news-app-challenge/assets/77591347/7023323d-c022-4697-bbbd-5a6aaa327051)
-
-
 
 
  |  **News Screen** |  **New Detail Screen** |
