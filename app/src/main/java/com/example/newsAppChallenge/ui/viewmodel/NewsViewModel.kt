@@ -1,5 +1,6 @@
 package com.example.newsAppChallenge.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsAppChallenge.data.NewsData
@@ -16,7 +17,6 @@ import javax.inject.Inject
 class NewsViewModel
     @Inject
     constructor(private val newsRepository: NewsRepository) : ViewModel() {
-
         private var _newsDetail = MutableStateFlow<NewsData>(NewsExample)
         val newsDetail: StateFlow<NewsData> = _newsDetail
 
@@ -33,13 +33,30 @@ class NewsViewModel
                 try {
                     _uiState.value = NewsUiState.Success
                     _newsList.value = newsRepository.getNewsPlaceHolder()
+                    Log.i("PrintRESULT", _newsList.value.toString())
                 } catch (e: IOException) {
                     _uiState.value = NewsUiState.Error
                 }
             }
         }
 
-        fun getNewsDetail(newsId: String)  {
+        fun reloadPage() {
+            _uiState.value = NewsUiState.Loading
+        }
+
+        fun searchNews(query: String) {
+            if (_uiState.value == NewsUiState.Success) {
+                val foundArticles =
+                    _newsList.value.filter { item ->
+                        item.title.contains(query)
+                    }
+                _newsList.value = foundArticles
+            } else {
+                _newsList.value = emptyList()
+            }
+        }
+
+        fun getNewsDetail(newsId: String) {
             viewModelScope.launch {
                 _uiState.value = NewsUiState.Loading
 
@@ -51,8 +68,6 @@ class NewsViewModel
                 }
             }
         }
-
-
     }
 
 sealed interface NewsUiState {

@@ -19,15 +19,15 @@ import androidx.core.view.WindowCompat
 private val DarkColorScheme =
     darkColorScheme(
         primary = RussianViolet,
-        secondary = PurpleGrey80,
-        tertiary = Pink80,
+        secondary = Grape,
+        tertiary = Fandango,
     )
 
 private val LightColorScheme =
     lightColorScheme(
         primary = RussianViolet,
-        secondary = PurpleGrey40,
-        tertiary = Pink40,
+        secondary = Grape,
+        tertiary = Fandango,
         background = Platinum,
         surface = Color.White,
         onPrimary = GhostWhite,

@@ -10,17 +10,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.news_app_challenge.R
 
 @Composable
-fun UsersImageComponent(imageSize: Dp) {
+fun UsersImageComponent(
+    imageSize: Dp,
+    userId: String = (0..100).random().toString(),
+) {
     AsyncImage(
         model =
             ImageRequest.Builder(context = LocalContext.current)
-                .data("https://picsum.photos/200")
+                .data("https://picsum.photos/$userId/200")
                 .crossfade(true)
                 .build(),
         error = painterResource(R.drawable.ic_broken_image),

@@ -17,7 +17,7 @@ sealed class AppScreen(val route: String) {
 
     object NewsDetailScreen : AppScreen(NEWS_DETAIL_SCREEN_ROUTE)
 
-    object UserScreen : AppScreen(USERS_SCREEN_ROUTE)
+    object UsersScreen : AppScreen(USERS_SCREEN_ROUTE)
 
-    object UserLocation : AppScreen(USERS_DETAIL_SCREEN_ROUTE)
+    object UserDetailScreen : AppScreen(USERS_DETAIL_SCREEN_ROUTE)
 }

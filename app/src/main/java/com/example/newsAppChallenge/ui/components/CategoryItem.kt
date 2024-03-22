@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.newsAppChallenge.ui.theme.RussianViolet
@@ -16,12 +17,13 @@ import com.example.newsAppChallenge.ui.theme.titleMediumStyle
 fun CategoryItem(
     category: String,
     alpha: Float = 1f,
-    padding: Int = 16
+    padding: Int = 16,
+    color: Color = RussianViolet,
 ) {
     Card(
         colors =
             CardDefaults.cardColors(
-                containerColor = RussianViolet.copy(alpha = alpha),
+                containerColor = color.copy(alpha = alpha),
             ),
     ) {
         Text(

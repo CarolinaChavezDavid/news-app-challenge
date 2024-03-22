@@ -10,4 +10,8 @@ class UsersRepositoryImpl
         override suspend fun getUsersList(): List<UsersData> {
             return usersServices.getUsersPlaceHolder()
         }
+
+        override suspend fun getUserDetail(userId: String): UsersData {
+            return usersServices.getUsersDetailPlaceHolder(userId)
+        }
     }

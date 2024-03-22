@@ -22,3 +22,14 @@ fun String.toFormattedDate(): String {
     val monthDayFormat = SimpleDateFormat("MMMM dd", Locale.getDefault())
     return monthDayFormat.format(date ?: today.time).uppercase(Locale.getDefault())
 }
+
+fun getGreeting(): String {
+    val calendar = Calendar.getInstance()
+    val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+
+    return when (hourOfDay) {
+        in 0..11 -> "Good morning"
+        in 12..18 -> "Good afternoon"
+        else -> "Good evening"
+    }
+}

@@ -12,7 +12,6 @@
     <string name="about_me_user">est rerum tempore vitae nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla</string>
     <string name="about_me_user_title">About me</string>
     <string name="location_user_title">Location</string>
-
-
-
+    <string name="app_greetings">Explore the world by one click</string>
+    <string name="follow">Follow</string>
 </resources>

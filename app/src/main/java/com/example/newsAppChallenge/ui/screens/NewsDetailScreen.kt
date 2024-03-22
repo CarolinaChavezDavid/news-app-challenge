@@ -1,60 +1,91 @@
 package com.example.newsAppChallenge.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.newsAppChallenge.data.NewsData
 import com.example.newsAppChallenge.data.NewsDetailData
-import com.example.newsAppChallenge.data.NewsExample
-import com.example.newsAppChallenge.data.UsersData
 import com.example.newsAppChallenge.data.userExample
 import com.example.newsAppChallenge.ui.components.CategoryItem
+import com.example.newsAppChallenge.ui.components.GradientImageComponent
+import com.example.newsAppChallenge.ui.components.UsersImageComponent
+import com.example.newsAppChallenge.ui.theme.PurpleGrey80
 import com.example.newsAppChallenge.ui.theme.labelSmallStyle
 import com.example.newsAppChallenge.ui.theme.titleLargeStyle
 import com.example.newsAppChallenge.ui.theme.titleMediumStyle
+import com.example.newsAppChallenge.ui.viewmodel.NewsUiState
+import com.example.newsAppChallenge.ui.viewmodel.NewsViewModel
 import com.example.newsAppChallenge.utils.toFormattedDate
 import com.example.news_app_challenge.R
 
 @Composable
 fun NewsDetailScreen(
-    newsDetail: NewsDetailData,
+    newsId: String,
+    newsViewModel: NewsViewModel = hiltViewModel(),
+    onUserClicked: (userId: String) -> Unit,
+    onUsersListClicked: () -> Unit,
 ) {
+    newsViewModel.getNewsDetail(newsId)
+    val uiState by newsViewModel.uiState.collectAsState()
+    Scaffold {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            when (uiState) {
+                is NewsUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+                is NewsUiState.Success ->
+                    NewsDetailContent(
+                        newsData = newsViewModel.newsDetail.collectAsState().value,
+                        it,
+                        onUserClicked,
+                        onUsersListClicked,
+                    )
+                is NewsUiState.Error -> ErrorScreen({ }, modifier = Modifier.fillMaxSize())
+            }
+        }
+    }
+}
+
+@Composable
+fun NewsDetailContent(
+    newsData: NewsData,
+    paddingValues: PaddingValues,
+    onUserClicked: (userId: String) -> Unit,
+    onUsersListClicked: () -> Unit,
+) {
+    val newsDetail = NewsDetailData(newsData, userExample)
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             item {
                 NewsDetailHeader(news = newsDetail.newsData)
             }
             item {
-                DetailsNewsContentHeader(newsDetail)
+                DetailsNewsContentHeader(newsDetail, onUserClicked, onUsersListClicked)
             }
             item {
                 Text(
@@ -83,30 +114,7 @@ fun NewsDetailHeader(news: NewsData) {
             ),
     ) {
         Box {
-            AsyncImage(
-                model = "https://picsum.photos/400",
-                contentDescription = "news image",
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .blur(
-                            radiusX = 30.dp,
-                            radiusY = 30.dp,
-                        )
-                        .drawWithCache {
-                            val gradient =
-                                Brush.verticalGradient(
-                                    colors = listOf(Color.Gray, Color.Black),
-                                    startY = size.height.div(3),
-                                    endY = size.height,
-                                )
-                            onDrawWithContent {
-                                drawContent()
-                                drawRect(gradient, blendMode = BlendMode.Multiply)
-                            }
-                        },
-                contentScale = ContentScale.Crop,
-            )
+            GradientImageComponent(imageUrl = news.image)
             Column(
                 modifier =
                     Modifier
@@ -118,7 +126,7 @@ fun NewsDetailHeader(news: NewsData) {
                     style = titleLargeStyle.copy(color = MaterialTheme.colorScheme.surface),
                     modifier = Modifier.padding(vertical = 12.dp, horizontal = 12.dp),
                 )
-                CategoryItem(category = "general", alpha = 0.3f, padding = 8)
+                CategoryItem(category = "general", alpha = 0.3f, padding = 8, color = PurpleGrey80)
             }
         }
     }
@@ -127,10 +135,18 @@ fun NewsDetailHeader(news: NewsData) {
 @Composable
 fun DetailsNewsContentHeader(
     newsDetail: NewsDetailData,
+    onUserClicked: (userId: String) -> Unit,
+    onUsersListClicked: () -> Unit,
 ) {
     val userPhotos = "https://picsum.photos/400"
 
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
         Text(
             text = newsDetail.newsData.publishedAt.toFormattedDate(),
             style = titleMediumStyle,
@@ -140,47 +156,31 @@ fun DetailsNewsContentHeader(
                 ),
         )
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-            Column {
-                AsyncImage(
-                    model = "https://picsum.photos/400",
-                    contentDescription = stringResource(id = R.string.user_image),
-                    modifier =
-                        Modifier
-                            .size(50.dp)
-                            .clip(CircleShape),
-                    contentScale = ContentScale.Crop,
-                )
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Absolute.SpaceBetween) {
+            Column(modifier = Modifier.clickable { onUserClicked(newsDetail.userData.id.toString()) }) {
+                UsersImageComponent(imageSize = 50.dp, userId = newsDetail.userData.id.toString())
                 Text(
                     text = "PUBLISHED BY ${newsDetail.userData.firstname} ${newsDetail.userData.lastname}",
                     style = labelSmallStyle,
                 )
             }
 
-            Column() {
-                val images = List(4) { userPhotos}
+            Column(modifier = Modifier.clickable { onUsersListClicked() }) {
+                val images = List(4) { userPhotos }
+                Text(
+                    modifier = Modifier.align(Alignment.End),
+                    text = stringResource(id = R.string.read_by_label),
+                    style = labelSmallStyle,
+                )
                 LazyRow {
                     item {
                         OverlappingRow {
                             images.forEach { user ->
-                                AsyncImage(
-                                    model = "https://picsum.photos/400",
-                                    contentDescription = stringResource(id = R.string.user_image),
-                                    modifier =
-                                        Modifier
-                                            .size(50.dp)
-                                            .clip(CircleShape),
-                                    contentScale = ContentScale.Crop,
-                                )
+                                UsersImageComponent(imageSize = 50.dp)
                             }
                         }
                     }
                 }
-
-                Text(
-                    text = stringResource(id = R.string.read_by_label),
-                    style = labelSmallStyle,
-                )
             }
         }
     }
@@ -211,11 +211,4 @@ fun OverlappingRow(
             }
         },
     )
-}
-
-
-
-@Preview
-@Composable
-fun PreviewNewsDetailScreen() {
 }

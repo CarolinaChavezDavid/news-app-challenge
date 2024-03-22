@@ -2,6 +2,7 @@ package com.example.newsAppChallenge.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,23 +16,27 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.newsAppChallenge.data.UsersData
-import com.example.newsAppChallenge.data.userExample
 import com.example.newsAppChallenge.ui.components.CategoryItem
 import com.example.newsAppChallenge.ui.components.UsersImageComponent
 import com.example.newsAppChallenge.ui.theme.Platinum
 import com.example.newsAppChallenge.ui.theme.labelSmallStyle
 import com.example.newsAppChallenge.ui.theme.titleLargeStyle
 import com.example.newsAppChallenge.ui.theme.titleMediumStyle
+import com.example.newsAppChallenge.ui.viewmodel.UsersUiState
+import com.example.newsAppChallenge.ui.viewmodel.UsersViewModel
 import com.example.news_app_challenge.R
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -41,7 +46,31 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun UserDetailScreen(userData: UsersData) {
+fun UserDetailScreen(
+    userId: String,
+    usersViewModel: UsersViewModel = hiltViewModel(),
+) {
+    usersViewModel.getUserById(userId)
+    val uiState by usersViewModel.uiState.collectAsState()
+
+    Scaffold {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            when (uiState) {
+                is UsersUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+                is UsersUiState.Success -> UserDetailContent(userData = usersViewModel.usersData.collectAsState().value, it)
+                is UsersUiState.Error -> ErrorScreen({ }, modifier = Modifier.fillMaxSize())
+            }
+        }
+    }
+}
+
+@Composable
+fun UserDetailContent(
+    userData: UsersData,
+    contentPadding: PaddingValues,
+) {
     Surface(
         modifier =
             Modifier
@@ -60,7 +89,7 @@ fun UserDetailScreen(userData: UsersData) {
 @Composable
 fun ProfileHeader(user: UsersData) {
     OverlappingBoxes(modifier = Modifier.fillMaxWidth()) {
-        UsersImageComponent(100.dp)
+        UsersImageComponent(100.dp, user.id.toString())
         UserInfoContainer(user)
     }
 }
@@ -134,10 +163,10 @@ fun ProfileContent(user: UsersData) {
 
 @Composable
 fun UserLocationCard(userData: UsersData) {
-    val recipeLocation = LatLng(userData.address.geo.lat.toDouble(), userData.address.geo.lng.toDouble())
+    val userLocation = LatLng(userData.address.geo.lat.toDouble(), userData.address.geo.lng.toDouble())
     val cameraPositionState =
         rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(recipeLocation, 10f)
+            position = CameraPosition.fromLatLngZoom(userLocation, 10f)
         }
 
     Card(
@@ -150,7 +179,7 @@ fun UserLocationCard(userData: UsersData) {
             cameraPositionState = cameraPositionState,
         ) {
             Marker(
-                state = MarkerState(position = recipeLocation),
+                state = MarkerState(position = userLocation),
                 title = userData.address.city,
                 snippet = userData.address.street,
             )
@@ -234,10 +263,4 @@ fun OverlappingBoxes(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewUsersDetailScreen() {
-    UserDetailScreen(userExample)
 }
